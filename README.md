@@ -36,7 +36,7 @@ A pasta principal (`cinema-app-tests`) é dedicada à manutenção dos testes de
     npm start
     ```
 
-## 🧪 Como Rodar os Testes
+## Como Rodar os Testes
 
 Para garantir a qualidade, execute os testes com o seguinte comando (ajuste conforme sua ferramenta de teste, ex: Jest, Cypress):
 
