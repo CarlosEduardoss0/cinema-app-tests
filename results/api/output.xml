@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.13.7 on win32)" generated="2025-11-04T14:10:00.221097" rpa="false" schemaversion="5">
+<suite id="s1" name="Filmes Api" source="C:\Users\carlo\Projeto Cinema\cinema-app-tests\Testes\Testes API\filmes_api.robot">
+<test id="s1-t1" name="CT-FILMES-001 - Deve listar filmes com sucesso usando o token de autenticação" line="9">
+<kw name="Fazer Login e Obter Token" owner="api_keywords">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-11-04T14:10:00.534110" level="INFO">Creating Session using : alias=cinema_api, url=http://localhost:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>cinema_api</arg>
+<arg>${URL_BASE}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-11-04T14:10:00.533723" elapsed="0.000922"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-11-04T14:10:00.535726" level="INFO">&amp;{BODY} = { email=teste@email.com | password=123456 }</msg>
+<var>&amp;{BODY}</var>
+<arg>email=${email}</arg>
+<arg>password=${senha}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-11-04T14:10:00.535206" elapsed="0.000564"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-11-04T14:10:04.643241" level="WARN">Retrying (RetryAdapter(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001F41F0C63C0&gt;: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente')': /api/login</msg>
+<msg time="2025-11-04T14:10:08.945267" level="WARN">Retrying (RetryAdapter(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001F41F09EE90&gt;: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente')': /api/login</msg>
+<msg time="2025-11-04T14:10:13.443191" level="WARN">Retrying (RetryAdapter(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001F41F09F110&gt;: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente')': /api/login</msg>
+<msg time="2025-11-04T14:10:17.545306" level="FAIL">ConnectionError: HTTPConnectionPool(host='localhost', port=3000): Max retries exceeded with url: /api/login (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001F41F0DD810&gt;: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente'))</msg>
+<var>${RESPONSE}</var>
+<arg>cinema_api</arg>
+<arg>/api/login</arg>
+<arg>json=&amp;{BODY}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="FAIL" start="2025-11-04T14:10:00.535916" elapsed="17.040112">ConnectionError: HTTPConnectionPool(host='localhost', port=3000): Max retries exceeded with url: /api/login (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001F41F0DD810&gt;: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente'))</status>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>200</arg>
+<arg>${RESPONSE}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="NOT RUN" start="2025-11-04T14:10:17.576418" elapsed="0.000052"/>
+</kw>
+<kw name="To Json" owner="RequestsLibrary">
+<msg time="2025-11-04T14:10:17.576709" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+<var>${JSON_BODY}</var>
+<arg>${RESPONSE.content}</arg>
+<doc>*DEPRECATED* Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</doc>
+<status status="NOT RUN" start="2025-11-04T14:10:17.576661" elapsed="0.000598"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<var>${TOKEN}</var>
+<arg>${JSON_BODY}</arg>
+<arg>token</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="NOT RUN" start="2025-11-04T14:10:17.577517" elapsed="0.000053"/>
+</kw>
+<kw name="RETURN ${TOKEN}">
+<status status="NOT RUN" start="2025-11-04T14:10:17.578085" elapsed="0.000044"/>
+</kw>
+<var>${TOKEN}</var>
+<arg>teste@email.com</arg>
+<arg>123456</arg>
+<doc>Realiza a requisição de Login e retorna o token JWT.</doc>
+<status status="FAIL" start="2025-11-04T14:10:00.532454" elapsed="17.045888">ConnectionError: HTTPConnectionPool(host='localhost', port=3000): Max retries exceeded with url: /api/login (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001F41F0DD810&gt;: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente'))</status>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<var>${HEADERS}</var>
+<arg>Authorization=Bearer ${TOKEN}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" start="2025-11-04T14:10:17.578921" elapsed="0.000049"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<arg>cinema_api</arg>
+<arg>${URL_BASE}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="NOT RUN" start="2025-11-04T14:10:17.579445" elapsed="0.000045"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<var>${RESPONSE}</var>
+<arg>cinema_api</arg>
+<arg>/api/filmes</arg>
+<arg>headers=${HEADERS}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" start="2025-11-04T14:10:17.579957" elapsed="0.000045"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>200</arg>
+<arg>${RESPONSE}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="NOT RUN" start="2025-11-04T14:10:17.580472" elapsed="0.000045"/>
+</kw>
+<kw name="To Json" owner="RequestsLibrary">
+<msg time="2025-11-04T14:10:17.581082" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+<var>${JSON_BODY}</var>
+<arg>${RESPONSE.content}</arg>
+<doc>*DEPRECATED* Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</doc>
+<status status="NOT RUN" start="2025-11-04T14:10:17.580972" elapsed="0.000640"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>len(${JSON_BODY}) &gt;= 0</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="NOT RUN" start="2025-11-04T14:10:17.581932" elapsed="0.000043"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<arg>len(${JSON_BODY}) &gt; 0</arg>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${JSON_BODY[0]}</arg>
+<arg>title</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="NOT RUN" start="2025-11-04T14:10:17.582254" elapsed="0.000040"/>
+</kw>
+<doc>Verifica se a listagem de filmes é protegida e funcional.</doc>
+<status status="FAIL" start="2025-11-04T14:10:00.531279" elapsed="17.051406">ConnectionError: HTTPConnectionPool(host='localhost', port=3000): Max retries exceeded with url: /api/login (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001F41F0DD810&gt;: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente'))</status>
+</test>
+<test id="s1-t2" name="CT-FILMES-002 - Não deve listar filmes sem o token de autenticação" line="38">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-11-04T14:10:17.588427" level="INFO">Creating Session using : alias=cinema_api_unauth, url=http://localhost:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>cinema_api_unauth</arg>
+<arg>${URL_BASE}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-11-04T14:10:17.588086" elapsed="0.000659"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-11-04T14:10:21.683838" level="WARN">Retrying (RetryAdapter(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001F41F0DEC40&gt;: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente')': /api/filmes</msg>
+<msg time="2025-11-04T14:10:25.977629" level="WARN">Retrying (RetryAdapter(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001F41F0BD7F0&gt;: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente')': /api/filmes</msg>
+<msg time="2025-11-04T14:10:30.481469" level="WARN">Retrying (RetryAdapter(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001F41F184C00&gt;: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente')': /api/filmes</msg>
+<msg time="2025-11-04T14:10:34.570013" level="FAIL">ConnectionError: HTTPConnectionPool(host='localhost', port=3000): Max retries exceeded with url: /api/filmes (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001F41F184F30&gt;: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente'))</msg>
+<var>${RESPONSE}</var>
+<arg>cinema_api_unauth</arg>
+<arg>/api/filmes</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="FAIL" start="2025-11-04T14:10:17.589188" elapsed="16.991224">ConnectionError: HTTPConnectionPool(host='localhost', port=3000): Max retries exceeded with url: /api/filmes (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001F41F184F30&gt;: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente'))</status>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>401</arg>
+<arg>${RESPONSE}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="NOT RUN" start="2025-11-04T14:10:34.581012" elapsed="0.000049"/>
+</kw>
+<kw name="To Json" owner="RequestsLibrary">
+<msg time="2025-11-04T14:10:34.581526" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+<var>${JSON_BODY}</var>
+<arg>${RESPONSE.content}</arg>
+<doc>*DEPRECATED* Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</doc>
+<status status="NOT RUN" start="2025-11-04T14:10:34.581476" elapsed="0.000365"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${JSON_BODY['message']}</arg>
+<arg>Não autorizado</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="NOT RUN" start="2025-11-04T14:10:34.582112" elapsed="0.000060"/>
+</kw>
+<doc>Testa o cenário de segurança: acesso negado sem JWT.</doc>
+<status status="FAIL" start="2025-11-04T14:10:17.583884" elapsed="16.998661">ConnectionError: HTTPConnectionPool(host='localhost', port=3000): Max retries exceeded with url: /api/filmes (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001F41F184F30&gt;: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente'))</status>
+</test>
+<status status="FAIL" start="2025-11-04T14:10:00.225214" elapsed="34.358275"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="2" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Filmes Api" id="s1" pass="0" fail="2" skip="0">Filmes Api</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2025-11-04T14:10:04.643241" level="WARN">Retrying (RetryAdapter(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001F41F0C63C0&gt;: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente')': /api/login</msg>
+<msg time="2025-11-04T14:10:08.945267" level="WARN">Retrying (RetryAdapter(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001F41F09EE90&gt;: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente')': /api/login</msg>
+<msg time="2025-11-04T14:10:13.443191" level="WARN">Retrying (RetryAdapter(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001F41F09F110&gt;: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente')': /api/login</msg>
+<msg time="2025-11-04T14:10:17.576709" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+<msg time="2025-11-04T14:10:17.581082" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+<msg time="2025-11-04T14:10:21.683838" level="WARN">Retrying (RetryAdapter(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001F41F0DEC40&gt;: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente')': /api/filmes</msg>
+<msg time="2025-11-04T14:10:25.977629" level="WARN">Retrying (RetryAdapter(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001F41F0BD7F0&gt;: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente')': /api/filmes</msg>
+<msg time="2025-11-04T14:10:30.481469" level="WARN">Retrying (RetryAdapter(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001F41F184C00&gt;: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente')': /api/filmes</msg>
+<msg time="2025-11-04T14:10:34.581526" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+</errors>
+</robot>
